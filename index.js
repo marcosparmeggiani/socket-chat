@@ -14,9 +14,11 @@ app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "index.html"));
 });
 
-io.on("connection", (socket) => {
-  console.log("a user connected");
-});
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+}); 
 
 server.listen(3009, () => {
   console.log("server running at http://localhost:3009");
